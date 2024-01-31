@@ -1,4 +1,4 @@
-module com.example.internshipsms {
+module com.example {
     requires javafx.controls;
     requires javafx.fxml;
 
@@ -7,6 +7,6 @@ module com.example.internshipsms {
     requires org.mongodb.bson;
     requires org.mongodb.driver.core;
 
-    opens com.example.internshipsms to javafx.fxml;
-    exports com.example.internshipsms;
+    opens com.example to javafx.fxml;
+    exports com.example;
 }

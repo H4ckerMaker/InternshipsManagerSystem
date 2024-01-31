@@ -4,18 +4,14 @@ import java.util.Date;
 
 public class TirocinioEsterno extends Tirocinio{
 
-    private Tutor tutor;
+    private final Tutor tutor;
 
-    public TirocinioEsterno(int id, Date date, String stato, String nomeRelatore, String cognomeRelatore, Studente studente, Tutor tutor) {
-        super(id, date, stato, nomeRelatore, cognomeRelatore, studente);
+    public TirocinioEsterno(int id, Date dataInizio, Date dataFine, String stato, String nomeRelatore, String cognomeRelatore, Studente studente, Tutor tutor) {
+        super(id, dataInizio, dataFine, stato, nomeRelatore, cognomeRelatore, studente);
         this.tutor = tutor;
     }
 
     public Tutor getTutor() {
         return tutor;
-    }
-
-    public void setTutor(Tutor tutor) {
-        this.tutor = tutor;
     }
 }

@@ -1,18 +1,21 @@
 package com.example.model;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public abstract class Tirocinio {
-    private int id;
-    private Date date;
+    private final int id;
+    private final Date dataInizio;
+    private final Date dataFine;
     private String stato;
-    private String nomeRelatore;
-    private String cognomeRelatore;
-    private Studente studente;
+    private final String nomeRelatore;
+    private final String cognomeRelatore;
+    private final Studente studente;
 
-    public Tirocinio(int id, Date date, String stato, String nomeRelatore, String cognomeRelatore, Studente studente) {
+    public Tirocinio(int id, Date dataInizio, Date dataFine, String stato, String nomeRelatore, String cognomeRelatore, Studente studente) {
         this.id = id;
-        this.date = date;
+        this.dataInizio = dataInizio;
+        this.dataFine = dataFine;
         this.stato = stato;
         this.nomeRelatore = nomeRelatore;
         this.cognomeRelatore = cognomeRelatore;
@@ -23,16 +26,12 @@ public abstract class Tirocinio {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public Date getDataInizio() {
+        return dataInizio;
     }
 
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
+    public Date getDataFine() {
+        return dataFine;
     }
 
     public String getStato() {
@@ -47,27 +46,35 @@ public abstract class Tirocinio {
         return nomeRelatore;
     }
 
-    public void setNomeRelatore(String nomeRelatore) {
-        this.nomeRelatore = nomeRelatore;
-    }
-
     public String getCognomeRelatore() {
         return cognomeRelatore;
     }
-
-    public void setCognomeRelatore(String cognomeRelatore) {
-        this.cognomeRelatore = cognomeRelatore;
-    }
-
-    public boolean isAcceptable() { return false; }
-
-    private boolean checkDurata() { return false; }
 
     public Studente getStudente() {
         return studente;
     }
 
-    public void setStudente(Studente studente) {
-        this.studente = studente;
+    public int checkAcceptability() {
+        if (this.studente.getCfu() >= 120)
+            if (this.checkDurata())
+                return 0;
+            else
+                return 2;
+        else
+            return 1;
+    }
+
+    public int getDurata() {
+        Calendar cal1 = Calendar.getInstance();
+        cal1.setTime(this.dataInizio);
+        Calendar cal2 = Calendar.getInstance();
+        cal2.setTime(this.dataFine);
+        int differenzaAnni = cal2.get(Calendar.YEAR) - cal1.get(Calendar.YEAR);
+        int differenzaMesi = cal2.get(Calendar.MONTH) - cal1.get(Calendar.MONTH);
+        return differenzaAnni * 12 + differenzaMesi;
+    }
+    private boolean checkDurata() {
+        int diff = this.getDurata();
+        return diff >= 3;
     }
 }
